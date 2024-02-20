@@ -11,26 +11,6 @@ pub(crate) struct Palette {
 }
 
 impl Palette {
-    pub(crate) const ORIGINAL: Self = Self {
-        base_foreground_lightness: 0.9,
-        foreground_chroma: 0.03,
-        base_greyscale_lightness: 0.37,
-        greyscale_lightness_scale_multiplier: 1.0,
-        base_color_lightness: 0.8,
-        color_lightness_scale_multiplier: 1.0,
-        color_chroma: 0.064,
-    };
-
-    pub(crate) const HIGH_CONTRAST: Self = Self {
-        base_foreground_lightness: 0.93,
-        foreground_chroma: 0.03,
-        base_greyscale_lightness: 0.34,
-        greyscale_lightness_scale_multiplier: 1.5,
-        base_color_lightness: 0.8,
-        color_lightness_scale_multiplier: 1.15,
-        color_chroma: 0.078,
-    };
-
     pub(crate) const DARKER: Self = Self {
         base_foreground_lightness: 0.95,
         foreground_chroma: 0.01,
@@ -40,7 +20,25 @@ impl Palette {
         color_lightness_scale_multiplier: 1.05,
         color_chroma: 0.1,
     };
-
+    const FG_HUE: f32 = 107.0;
+    pub(crate) const HIGH_CONTRAST: Self = Self {
+        base_foreground_lightness: 0.93,
+        foreground_chroma: 0.03,
+        base_greyscale_lightness: 0.34,
+        greyscale_lightness_scale_multiplier: 1.5,
+        base_color_lightness: 0.8,
+        color_lightness_scale_multiplier: 1.15,
+        color_chroma: 0.078,
+    };
+    pub(crate) const ORIGINAL: Self = Self {
+        base_foreground_lightness: 0.9,
+        foreground_chroma: 0.03,
+        base_greyscale_lightness: 0.37,
+        greyscale_lightness_scale_multiplier: 1.0,
+        base_color_lightness: 0.8,
+        color_lightness_scale_multiplier: 1.0,
+        color_chroma: 0.064,
+    };
     pub(crate) const STEALTH: Self = Self {
         base_foreground_lightness: 0.9,
         foreground_chroma: 0.03,
@@ -51,10 +49,12 @@ impl Palette {
         color_chroma: 0.064,
     };
 
-    const FG_HUE: f32 = 107.0;
-
     pub(crate) fn fg(&self) -> (u8, u8, u8) {
-        oklch(self.base_foreground_lightness, self.foreground_chroma, Self::FG_HUE)
+        oklch(
+            self.base_foreground_lightness,
+            self.foreground_chroma,
+            Self::FG_HUE,
+        )
     }
 
     pub(crate) fn bright_fg(&self) -> (u8, u8, u8) {
@@ -137,7 +137,7 @@ impl Palette {
 }
 
 macro_rules! def_color_method {
-    ($name:ident, hue: $hue:literal) => {
+    ($name:ident,hue: $hue:literal) => {
         impl Palette {
             pub(crate) fn $name(&self, lightness: impl Into<ColorLightness>) -> (u8, u8, u8) {
                 oklch(self.color_lightness(lightness), self.color_chroma, $hue)
@@ -157,8 +157,11 @@ impl Palette {
     pub(crate) fn blue(&self, lightness: impl Into<ColorLightness>) -> (u8, u8, u8) {
         let lightness = lightness.into();
 
-        let chroma =
-            if lightness.0 == 2 { self.color_chroma.min(0.045) } else { self.color_chroma };
+        let chroma = if lightness.0 == 2 {
+            self.color_chroma.min(0.045)
+        } else {
+            self.color_chroma
+        };
 
         oklch(self.color_lightness(lightness), chroma, 243.0)
     }
@@ -195,7 +198,11 @@ pub(crate) const ERROR_LENS_BACKGROUND_LIGHTNESS: ColorLightness = ColorLightnes
 pub(crate) const ERROR_LENS_FOREGROUND_LIGHTNESS: ColorLightness = ColorLightness(1);
 
 fn oklch(l: f32, c: f32, h: f32) -> (u8, u8, u8) {
-    let oklch = Oklch { l, c, h: h.to_radians() };
+    let oklch = Oklch {
+        l,
+        c,
+        h: h.to_radians(),
+    };
     let oklab = tincture::oklch_to_oklab(oklch);
     let linear_srgb = tincture::oklab_to_linear_srgb(oklab);
     let srgb = tincture::linear_srgb_to_srgb(linear_srgb);

@@ -1,11 +1,27 @@
+use mottle::{
+    dsl::{
+        s,
+        tm,
+        FontStyle,
+        ThemeBuilder,
+    },
+    proto,
+};
+
 use crate::palette::{
-    Palette, DIFF_BG_LIGHTNESS, DIFF_FG_LIGHTNESS, ERROR_LENS_BACKGROUND_LIGHTNESS,
-    ERROR_LENS_FOREGROUND_LIGHTNESS, GIT_DECORATION_LIGHTNESS, GUTTER_LIGHTNESS, MINIMAP_LIGHTNESS,
-    OVERVIEW_RULER_LIGHTNESS, STATUS_BAR_LIGHTNESS, TERMINAL_ANSI_BRIGHT_LIGHTNESS,
+    Palette,
+    DIFF_BG_LIGHTNESS,
+    DIFF_FG_LIGHTNESS,
+    ERROR_LENS_BACKGROUND_LIGHTNESS,
+    ERROR_LENS_FOREGROUND_LIGHTNESS,
+    GIT_DECORATION_LIGHTNESS,
+    GUTTER_LIGHTNESS,
+    MINIMAP_LIGHTNESS,
+    OVERVIEW_RULER_LIGHTNESS,
+    STATUS_BAR_LIGHTNESS,
+    TERMINAL_ANSI_BRIGHT_LIGHTNESS,
     TERMINAL_ANSI_LIGHTNESS,
 };
-use mottle::dsl::{s, tm, FontStyle, ThemeBuilder};
-use mottle::proto;
 
 const INJECTED_OPACITY: u8 = 0xaa;
 
@@ -29,8 +45,14 @@ fn workspace_colors(t: &mut ThemeBuilder, p: &Palette) {
     t.w(["checkbox.background"], p.greyscale(-2));
     t.w(["checkbox.border"], p.greyscale(2));
     t.w(["debugIcon.breakpointForeground"], p.red(0));
-    t.w(["diffEditor.insertedTextBackground"], (p.green(DIFF_BG_LIGHTNESS), 0x33));
-    t.w(["diffEditor.removedTextBackground"], (p.red(DIFF_BG_LIGHTNESS), 0x33));
+    t.w(
+        ["diffEditor.insertedTextBackground"],
+        (p.green(DIFF_BG_LIGHTNESS), 0x33),
+    );
+    t.w(
+        ["diffEditor.removedTextBackground"],
+        (p.red(DIFF_BG_LIGHTNESS), 0x33),
+    );
     t.w(["dropdown.border"], p.greyscale(2));
     t.w(["dropdown.foreground"], p.fg());
     t.w(["editor.background"], p.greyscale(0));
@@ -66,16 +88,25 @@ fn workspace_colors(t: &mut ThemeBuilder, p: &Palette) {
     t.w(["editorGroupHeader.tabsBackground"], p.greyscale(-2));
     t.w(["editorGroup.border"], p.greyscale(3));
     t.w(
-        ["editorGutter.addedBackground", "minimapGutter.addedBackground"],
+        [
+            "editorGutter.addedBackground",
+            "minimapGutter.addedBackground",
+        ],
         p.green(GUTTER_LIGHTNESS),
     );
     t.w(["editorGutter.background"], p.greyscale(2));
     t.w(
-        ["editorGutter.deletedBackground", "minimapGutter.deletedBackground"],
+        [
+            "editorGutter.deletedBackground",
+            "minimapGutter.deletedBackground",
+        ],
         p.red(GUTTER_LIGHTNESS),
     );
     t.w(
-        ["editorGutter.modifiedBackground", "minimapGutter.modifiedBackground"],
+        [
+            "editorGutter.modifiedBackground",
+            "minimapGutter.modifiedBackground",
+        ],
         p.yellow(GUTTER_LIGHTNESS),
     );
     t.w(["editorIndentGuide.activeBackground"], p.greyscale(3));
@@ -85,32 +116,87 @@ fn workspace_colors(t: &mut ThemeBuilder, p: &Palette) {
     t.w(["editorLineNumber.activeForeground"], p.greyscale(5));
     t.w(["editorLineNumber.foreground"], p.greyscale(4));
     t.w(
-        ["editorLink.activeForeground", "textLink.foreground", "textLink.activeForeground"],
+        [
+            "editorLink.activeForeground",
+            "textLink.foreground",
+            "textLink.activeForeground",
+        ],
         p.blue(0),
     );
-    t.w(["editorOverviewRuler.addedForeground"], p.green(OVERVIEW_RULER_LIGHTNESS));
+    t.w(
+        ["editorOverviewRuler.addedForeground"],
+        p.green(OVERVIEW_RULER_LIGHTNESS),
+    );
     t.w(["editorOverviewRuler.border"], p.greyscale(3));
-    t.w(["editorOverviewRuler.deletedForeground"], p.red(OVERVIEW_RULER_LIGHTNESS));
-    t.w(["editorOverviewRuler.errorForeground"], p.red(OVERVIEW_RULER_LIGHTNESS));
-    t.w(["editorOverviewRuler.findMatchForeground"], (p.blue(OVERVIEW_RULER_LIGHTNESS), 0x88));
-    t.w(["editorOverviewRuler.infoForeground"], p.blue(OVERVIEW_RULER_LIGHTNESS));
-    t.w(["editorOverviewRuler.modifiedForeground"], p.yellow(OVERVIEW_RULER_LIGHTNESS));
-    t.w(["editorOverviewRuler.rangeHighlightForeground"], (p.blue(OVERVIEW_RULER_LIGHTNESS), 0x33));
+    t.w(
+        ["editorOverviewRuler.deletedForeground"],
+        p.red(OVERVIEW_RULER_LIGHTNESS),
+    );
+    t.w(
+        ["editorOverviewRuler.errorForeground"],
+        p.red(OVERVIEW_RULER_LIGHTNESS),
+    );
+    t.w(
+        ["editorOverviewRuler.findMatchForeground"],
+        (p.blue(OVERVIEW_RULER_LIGHTNESS), 0x88),
+    );
+    t.w(
+        ["editorOverviewRuler.infoForeground"],
+        p.blue(OVERVIEW_RULER_LIGHTNESS),
+    );
+    t.w(
+        ["editorOverviewRuler.modifiedForeground"],
+        p.yellow(OVERVIEW_RULER_LIGHTNESS),
+    );
+    t.w(
+        ["editorOverviewRuler.rangeHighlightForeground"],
+        (p.blue(OVERVIEW_RULER_LIGHTNESS), 0x33),
+    );
     t.w(["editorWarning.foreground"], p.orange(0));
     t.w(["editorWidget.background"], p.greyscale(-1));
     t.w(["editorWidget.border"], p.greyscale(2));
-    t.w(["errorLens.errorBackground"], (p.red(ERROR_LENS_BACKGROUND_LIGHTNESS), 0x33));
-    t.w(["errorLens.errorForeground"], p.red(ERROR_LENS_FOREGROUND_LIGHTNESS));
-    t.w(["errorLens.warningBackground"], (p.orange(ERROR_LENS_BACKGROUND_LIGHTNESS), 0x33));
-    t.w(["errorLens.warningForeground"], p.orange(ERROR_LENS_FOREGROUND_LIGHTNESS));
-    t.w(["errorLens.infoBackground"], (p.blue(ERROR_LENS_BACKGROUND_LIGHTNESS), 0x33));
-    t.w(["errorLens.infoForeground"], p.blue(ERROR_LENS_FOREGROUND_LIGHTNESS));
-    t.w(["errorLens.hintBackground"], (p.green(ERROR_LENS_BACKGROUND_LIGHTNESS), 0x33));
-    t.w(["errorLens.hintForeground"], p.green(ERROR_LENS_FOREGROUND_LIGHTNESS));
+    t.w(
+        ["errorLens.errorBackground"],
+        (p.red(ERROR_LENS_BACKGROUND_LIGHTNESS), 0x33),
+    );
+    t.w(
+        ["errorLens.errorForeground"],
+        p.red(ERROR_LENS_FOREGROUND_LIGHTNESS),
+    );
+    t.w(
+        ["errorLens.warningBackground"],
+        (p.orange(ERROR_LENS_BACKGROUND_LIGHTNESS), 0x33),
+    );
+    t.w(
+        ["errorLens.warningForeground"],
+        p.orange(ERROR_LENS_FOREGROUND_LIGHTNESS),
+    );
+    t.w(
+        ["errorLens.infoBackground"],
+        (p.blue(ERROR_LENS_BACKGROUND_LIGHTNESS), 0x33),
+    );
+    t.w(
+        ["errorLens.infoForeground"],
+        p.blue(ERROR_LENS_FOREGROUND_LIGHTNESS),
+    );
+    t.w(
+        ["errorLens.hintBackground"],
+        (p.green(ERROR_LENS_BACKGROUND_LIGHTNESS), 0x33),
+    );
+    t.w(
+        ["errorLens.hintForeground"],
+        p.green(ERROR_LENS_FOREGROUND_LIGHTNESS),
+    );
     t.w(["focusBorder"], p.greyscale(3));
     t.w(["gitDecoration.ignoredResourceForeground"], p.greyscale(4));
-    t.w(["gitDecoration.modifiedResourceForeground"], p.yellow(GIT_DECORATION_LIGHTNESS));
-    t.w(["gitDecoration.untrackedResourceForeground"], p.green(GIT_DECORATION_LIGHTNESS));
+    t.w(
+        ["gitDecoration.modifiedResourceForeground"],
+        p.yellow(GIT_DECORATION_LIGHTNESS),
+    );
+    t.w(
+        ["gitDecoration.untrackedResourceForeground"],
+        p.green(GIT_DECORATION_LIGHTNESS),
+    );
     t.w(["input.background"], p.greyscale(-2));
     t.w(["input.border"], p.greyscale(2));
     t.w(["input.foreground"], p.fg());
@@ -124,18 +210,27 @@ fn workspace_colors(t: &mut ThemeBuilder, p: &Palette) {
     t.w(["list.inactiveSelectionBackground"], p.greyscale(1));
     t.w(["list.warningForeground"], p.orange(0));
     t.w(["minimap.errorHighlight"], p.red(MINIMAP_LIGHTNESS));
-    t.w(["minimap.findMatchHighlight"], (p.blue(MINIMAP_LIGHTNESS), 0x66));
+    t.w(
+        ["minimap.findMatchHighlight"],
+        (p.blue(MINIMAP_LIGHTNESS), 0x66),
+    );
     t.w(["minimap.warningHighlight"], p.orange(MINIMAP_LIGHTNESS));
     t.w(["panel.background"], p.greyscale(1));
     t.w(["panel.border"], p.greyscale(3));
     t.w(["panelTitle.activeForeground"], p.fg());
     t.w(["peekView.border"], p.greyscale(4));
     t.w(["peekViewEditor.background"], p.greyscale(0));
-    t.w(["peekViewEditor.matchHighlightBackground"], (p.blue(0), 0x66));
+    t.w(
+        ["peekViewEditor.matchHighlightBackground"],
+        (p.blue(0), 0x66),
+    );
     t.w(["peekViewResult.background"], p.greyscale(-1));
     t.w(["peekViewResult.fileForeground"], p.fg());
     t.w(["peekViewResult.lineForeground"], (p.fg(), 0x99));
-    t.w(["peekViewResult.matchHighlightBackground"], (p.blue(0), 0x44));
+    t.w(
+        ["peekViewResult.matchHighlightBackground"],
+        (p.blue(0), 0x44),
+    );
     t.w(["peekViewResult.selectionBackground"], p.greyscale(2));
     t.w(["peekViewResult.selectionForeground"], p.fg());
     t.w(["peekViewTitle.background"], p.greyscale(-1));
@@ -151,14 +246,27 @@ fn workspace_colors(t: &mut ThemeBuilder, p: &Palette) {
     t.w(["sideBar.foreground"], p.fg());
     t.w(["sideBarTitle.foreground"], p.bright_fg());
     t.w(
-        ["statusBar.background", "statusBar.debuggingBackground", "statusBar.noFolderBackground"],
+        [
+            "statusBar.background",
+            "statusBar.debuggingBackground",
+            "statusBar.noFolderBackground",
+        ],
         p.greyscale(-2),
     );
     t.w(["statusBar.foreground"], p.green(STATUS_BAR_LIGHTNESS));
-    t.w(["statusBar.debuggingForeground"], p.orange(STATUS_BAR_LIGHTNESS));
+    t.w(
+        ["statusBar.debuggingForeground"],
+        p.orange(STATUS_BAR_LIGHTNESS),
+    );
     t.w(["symbolIcon.keywordForeground"], p.keywords());
     t.w(["symbolIcon.variableForeground"], p.variables());
-    t.w(["symbolIcon.functionForeground", "symbolIcon.methodForeground"], p.functions());
+    t.w(
+        [
+            "symbolIcon.functionForeground",
+            "symbolIcon.methodForeground",
+        ],
+        p.functions(),
+    );
     t.w(
         [
             "symbolIcon.classForeground",
@@ -175,8 +283,20 @@ fn workspace_colors(t: &mut ThemeBuilder, p: &Palette) {
     t.w(["symbolIcon.interfaceForeground"], p.interfaces());
     t.w(["symbolIcon.constantForeground"], p.constants());
     t.w(["symbolIcon.enumeratorMemberForeground"], p.enum_members());
-    t.w(["symbolIcon.fieldForeground", "symbolIcon.propertyForeground"], p.properties());
-    t.w(["symbolIcon.moduleForeground", "symbolIcon.namespaceForeground"], p.namespaces());
+    t.w(
+        [
+            "symbolIcon.fieldForeground",
+            "symbolIcon.propertyForeground",
+        ],
+        p.properties(),
+    );
+    t.w(
+        [
+            "symbolIcon.moduleForeground",
+            "symbolIcon.namespaceForeground",
+        ],
+        p.namespaces(),
+    );
     t.w(["tab.activeForeground"], p.fg());
     t.w(["tab.border"], p.greyscale(0));
     t.w(["tab.inactiveBackground"], p.greyscale(-2));
@@ -184,13 +304,31 @@ fn workspace_colors(t: &mut ThemeBuilder, p: &Palette) {
     t.w(["terminal.ansiBlack"], p.greyscale(-2));
     t.w(["terminal.ansiBlue"], p.blue(TERMINAL_ANSI_LIGHTNESS));
     t.w(["terminal.ansiBrightBlack"], p.greyscale(5));
-    t.w(["terminal.ansiBrightBlue"], p.blue(TERMINAL_ANSI_BRIGHT_LIGHTNESS));
-    t.w(["terminal.ansiBrightCyan"], p.cyan(TERMINAL_ANSI_BRIGHT_LIGHTNESS));
-    t.w(["terminal.ansiBrightGreen"], p.green(TERMINAL_ANSI_BRIGHT_LIGHTNESS));
-    t.w(["terminal.ansiBrightMagenta"], p.purple(TERMINAL_ANSI_BRIGHT_LIGHTNESS));
-    t.w(["terminal.ansiBrightRed"], p.red(TERMINAL_ANSI_BRIGHT_LIGHTNESS));
+    t.w(
+        ["terminal.ansiBrightBlue"],
+        p.blue(TERMINAL_ANSI_BRIGHT_LIGHTNESS),
+    );
+    t.w(
+        ["terminal.ansiBrightCyan"],
+        p.cyan(TERMINAL_ANSI_BRIGHT_LIGHTNESS),
+    );
+    t.w(
+        ["terminal.ansiBrightGreen"],
+        p.green(TERMINAL_ANSI_BRIGHT_LIGHTNESS),
+    );
+    t.w(
+        ["terminal.ansiBrightMagenta"],
+        p.purple(TERMINAL_ANSI_BRIGHT_LIGHTNESS),
+    );
+    t.w(
+        ["terminal.ansiBrightRed"],
+        p.red(TERMINAL_ANSI_BRIGHT_LIGHTNESS),
+    );
     t.w(["terminal.ansiBrightWhite"], p.bright_fg());
-    t.w(["terminal.ansiBrightYellow"], p.yellow(TERMINAL_ANSI_BRIGHT_LIGHTNESS));
+    t.w(
+        ["terminal.ansiBrightYellow"],
+        p.yellow(TERMINAL_ANSI_BRIGHT_LIGHTNESS),
+    );
     t.w(["terminal.ansiCyan"], p.cyan(TERMINAL_ANSI_LIGHTNESS));
     t.w(["terminal.ansiGreen"], p.green(TERMINAL_ANSI_LIGHTNESS));
     t.w(["terminal.ansiMagenta"], p.purple(TERMINAL_ANSI_LIGHTNESS));
@@ -246,7 +384,14 @@ fn syntax_highlighting(t: &mut ThemeBuilder, p: &Palette) {
         (p.keywords(), FontStyle::Bold),
     );
 
-    t.a([s("number"), tm("constant.numeric"), tm("keyword.other.unit")], p.green(1));
+    t.a(
+        [
+            s("number"),
+            tm("constant.numeric"),
+            tm("keyword.other.unit"),
+        ],
+        p.green(1),
+    );
 
     t.a(
         [
@@ -261,7 +406,10 @@ fn syntax_highlighting(t: &mut ThemeBuilder, p: &Palette) {
 
     t.a([s("variable"), tm("variable")], p.variables());
 
-    t.a([s("enumMember"), tm("variable.other.enummember")], p.enum_members());
+    t.a(
+        [s("enumMember"), tm("variable.other.enummember")],
+        p.enum_members(),
+    );
 
     t.a(
         [
@@ -324,7 +472,14 @@ fn syntax_highlighting(t: &mut ThemeBuilder, p: &Palette) {
         p.cyan(0),
     );
 
-    t.a([s("typeParameter"), tm("entity.name.type.parameter"), tm("variable.type")], p.purple(0));
+    t.a(
+        [
+            s("typeParameter"),
+            tm("entity.name.type.parameter"),
+            tm("variable.type"),
+        ],
+        p.purple(0),
+    );
 
     t.a(
         [
@@ -388,7 +543,10 @@ fn syntax_highlighting(t: &mut ThemeBuilder, p: &Palette) {
         (p.purple(0), FontStyle::Italic),
     );
 
-    t.a([s("escapeSequence"), tm("constant.character.escape")], p.blue(0));
+    t.a(
+        [s("escapeSequence"), tm("constant.character.escape")],
+        p.blue(0),
+    );
 
     t.a(
         [
@@ -401,9 +559,19 @@ fn syntax_highlighting(t: &mut ThemeBuilder, p: &Palette) {
         p.blue(0),
     );
 
-    t.a([s("comment"), tm("comment"), tm("punctuation.definition.comment")], p.green(-2));
+    t.a(
+        [
+            s("comment"),
+            tm("comment"),
+            tm("punctuation.definition.comment"),
+        ],
+        p.green(-2),
+    );
 
-    t.a([s("comment.documentation"), tm("comment.line.documentation")], p.green(-1));
+    t.a(
+        [s("comment.documentation"), tm("comment.line.documentation")],
+        p.green(-1),
+    );
 
     t.a(
         [
@@ -422,7 +590,10 @@ fn syntax_highlighting(t: &mut ThemeBuilder, p: &Palette) {
 
     // CSS classes and IDs.
     t.a(
-        [tm("entity.other.attribute-name.class"), tm("entity.other.attribute-name.id")],
+        [
+            tm("entity.other.attribute-name.class"),
+            tm("entity.other.attribute-name.id"),
+        ],
         p.cyan(-1),
     );
 
@@ -499,16 +670,28 @@ fn syntax_highlighting(t: &mut ThemeBuilder, p: &Palette) {
     );
 
     t.a(
-        [tm("markup.inserted"), tm("punctuation.definition.inserted.diff")],
+        [
+            tm("markup.inserted"),
+            tm("punctuation.definition.inserted.diff"),
+        ],
         p.green(DIFF_FG_LIGHTNESS),
     );
     t.a(
-        [tm("markup.deleted"), tm("punctuation.definition.deleted.diff")],
+        [
+            tm("markup.deleted"),
+            tm("punctuation.definition.deleted.diff"),
+        ],
         p.red(DIFF_FG_LIGHTNESS),
     );
     t.a([tm("markup.changed")], p.orange(DIFF_FG_LIGHTNESS));
 
-    t.a([tm("punctuation.definition.range.diff"), tm("meta.diff.range")], p.blue(0));
+    t.a(
+        [
+            tm("punctuation.definition.range.diff"),
+            tm("meta.diff.range"),
+        ],
+        p.blue(0),
+    );
     t.a(
         [
             tm("comment.line.number-sign.git-commit"),
@@ -519,19 +702,28 @@ fn syntax_highlighting(t: &mut ThemeBuilder, p: &Palette) {
         p.greyscale(4),
     );
     t.a(
-        [tm("meta.diff.header.to-file"), tm("meta.diff.header.from-file")],
+        [
+            tm("meta.diff.header.to-file"),
+            tm("meta.diff.header.from-file"),
+        ],
         // we really want this to stand out
         // because it’s easily lost among noisy diff output
         (p.bright_fg(), FontStyle::Bold),
     );
     t.a(
-        [tm("punctuation.definition.from-file.diff"), tm("punctuation.definition.to-file.diff")],
+        [
+            tm("punctuation.definition.from-file.diff"),
+            tm("punctuation.definition.to-file.diff"),
+        ],
         p.cyan(0),
     );
 
     t.a([s("*.mutable"), tm("meta.mutable")], FontStyle::Underline);
 
-    t.a([s("unresolvedReference")], (p.red(-1), FontStyle::Underline));
+    t.a(
+        [s("unresolvedReference")],
+        (p.red(-1), FontStyle::Underline),
+    );
 
     t.a([s("magit-ref-name")], (p.cyan(1), FontStyle::Bold));
     t.a([s("magit-remote-ref-name")], (p.green(-2), FontStyle::Bold));
@@ -540,7 +732,10 @@ fn syntax_highlighting(t: &mut ThemeBuilder, p: &Palette) {
     t.a([tm("magit.entity")], p.greyscale(5));
 
     // Over 50 characters, the recommended limit.
-    t.a([tm("invalid.deprecated.line-too-long.git-commit")], p.orange(0));
+    t.a(
+        [tm("invalid.deprecated.line-too-long.git-commit")],
+        p.orange(0),
+    );
 
     // Over 72 characters, the hard limit.
     t.a([tm("invalid.illegal.line-too-long.git-commit")], p.red(0));
@@ -548,17 +743,24 @@ fn syntax_highlighting(t: &mut ThemeBuilder, p: &Palette) {
     // all semantic rules are duplicated,
     // with the `injected` modifier added and a lowered opacity
     for (mut selector, mut style) in t.semantic_rules.clone() {
-        selector.modifiers.push(proto::semantic::Identifier::new("injected").unwrap());
+        selector
+            .modifiers
+            .push(proto::semantic::Identifier::new("injected").unwrap());
 
         match &mut style.foreground {
             Some(c) => {
                 // we don’t specify alpha for syntax highlighting colors
-                assert_eq!(c.a, 0xFF);
+                assert_eq!(c.a, 0xff);
                 c.a = INJECTED_OPACITY;
             }
             None => {
                 let (r, g, b) = p.fg();
-                style.foreground = Some(proto::Color { r, g, b, a: INJECTED_OPACITY });
+                style.foreground = Some(proto::Color {
+                    r,
+                    g,
+                    b,
+                    a: INJECTED_OPACITY,
+                });
             }
         }
 
